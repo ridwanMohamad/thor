@@ -1,0 +1,39 @@
+apps:
+  name: 'thor'
+  version: '1.0.28'
+  enviroment: development
+server:
+  port: 9080
+database:
+  url: '119.13.105.211'
+  port: '5432'
+  databaseName: 'flux_backoffice'
+  username: 'app_thor'
+  password: 'apps_thor'
+  schema: 'thor'
+  connectionTimeout: '20s'
+  maxIdleConnection: 5
+  maxOpenConnection: 10
+  debugMode: true
+service : 
+  gcp:
+    credentialPath: "./resources/gcp_credential.json"
+    projectId: "d-ta-general"
+    bucketName: "test-log-cms-2"
+mail:
+  #host: 'smtp.gmail.com'
+  host: 'smtp.office365.com'
+  #port: '587'
+  port: '587'
+  #sender: 'denysetiawan28@gmail.com'
+  sender: 'reminder@titipaja.id'
+  senderName: 'titipaja'
+  #password: 'qbjkdvaqurbjzhlm'
+  password: '1T@5Lt1t1p@j42022'
+  smtpAuth: true
+  startTLS: true
+authConfig:
+  sessionMin: '24h'
+  sessionRememberMe: '5d'
+  maximumLoginFailed: 3
+#test

@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  app:
+    container_name: thor-service
+    image: titipaja/thor-server:latest
+    environment:
+      DD_AGENT_HOST: datadog-agent
+    build:
+      context: .
+      dockerfile: build.dev.Dockerfile
+    volumes:
+      - 'be:/thor/'
+    ports:
+      - 9080:9080
+    network_mode: titipaja-net
+    restart: always
+volumes:
+  be:
+    external: true

@@ -1,0 +1,33 @@
+#  Template Go (Golang) build
+
+#  This template allows you to validate your Go (Golang) code.
+#  The workflow allows running tests, build and code linting on the default branch.
+
+image: golang:1.17
+
+pipelines:
+  default:
+    - step: 
+        name: Test
+        script: 
+          - echo "${Test_Var}"
+    - step: 
+        name: Build
+        trigger: manual
+        script:
+          - mkdir test
+          - ls -l
+          - PACKAGE_PATH="${GOPATH}/src/bitbucket.org/${BITBUCKET_REPO_FULL_NAME}"
+          - mkdir -pv "${PACKAGE_PATH}"
+          - tar -cO --exclude-vcs --exclude=bitbucket-pipelines.yml . | tar -xv -C "${PACKAGE_PATH}"
+          - cd "${PACKAGE_PATH}"
+          - go mod download
+          - CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -ldflags="-w -s" -o thor-server
+          - ls -l "${PACKAGE_PATH}"
+          - pwd
+          - mkdir "${BITBUCKET_CLONE_DIR}/build"
+          - mv "thor-server" "${BITBUCKET_CLONE_DIR}/build"
+          - ls "${BITBUCKET_CLONE_DIR}/build"
+          - echo "${Test_Var}"
+        artifacts:
+          - build/thor-server
